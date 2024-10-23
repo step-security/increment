@@ -9,7 +9,7 @@ const amount = input("amount", "1");
 const push_to_org = (input("org", "") !== "");
 const owner = input("owner", github.context.payload.repository.owner.login);
 const repository = input("repository", github.context.payload.repository.name);
-const axios = require('axios');
+const axios = require("axios");
 
 /**
  *
