@@ -9,7 +9,11 @@ const amount = input("amount", "1");
 const push_to_org = (input("org", "") !== "");
 const owner = input("owner", github.context.payload.repository.owner.login);
 const repository = input("repository", github.context.payload.repository.name);
+const axios = require('axios');
 
+/**
+ *
+ */
 function path_() {
 
   if (push_to_org) return "/orgs/" + owner;
@@ -19,6 +23,11 @@ function path_() {
 
 }
 
+/**
+ *
+ * @param name
+ * @param def
+ */
 function input(name, def) {
 
   let inp = core.getInput(name).trim();
@@ -28,6 +37,11 @@ function input(name, def) {
 
 }
 
+/**
+ *
+ * @param string
+ * @param amount
+ */
 function increment(string, amount) {
   // Extract string's numbers
   var numbers = string.match(/\d+/g) || [];
@@ -169,19 +183,22 @@ bootstrap()
     process.exit();
   });
 
-  async function validateSubscription() {
-    const API_URL = `https://agent.api.stepsecurity.io/v1/github/${process.env.GITHUB_REPOSITORY}/actions/subscription`;
-  
-    try {
-      await axios.get(API_URL, {timeout: 3000});
-    } catch (error) {
-      if (error.response) {
-        console.error(
-          'Subscription is not valid. Reach out to support@stepsecurity.io'
-        );
-        process.exit(1);
-      } else {
-        core.info('Timeout or API not reachable. Continuing to next step.');
-      }
+/**
+ *
+ */
+async function validateSubscription() {
+  const API_URL = `https://agent.api.stepsecurity.io/v1/github/${process.env.GITHUB_REPOSITORY}/actions/subscription`;
+
+  try {
+    await axios.get(API_URL, {timeout: 3000});
+  } catch (error) {
+    if (error.response) {
+      console.error(
+        "Subscription is not valid. Reach out to support@stepsecurity.io"
+      );
+      process.exit(1);
+    } else {
+      core.info("Timeout or API not reachable. Continuing to next step.");
     }
   }
+}

@@ -2,13 +2,13 @@ name: Release GitHub Actions
 
 on:
   workflow_dispatch: 
-  pull_request:    
-    branches:
-      - main 
     inputs:
       tag:
         description: "Tag for the release"
         required: true
+  pull_request:    
+    branches:
+      - main
 
 permissions:
   contents: read
