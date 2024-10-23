@@ -1,7 +1,10 @@
 name: Release GitHub Actions
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: 
+  pull_request:    
+    branches:
+      - main 
     inputs:
       tag:
         description: "Tag for the release"
