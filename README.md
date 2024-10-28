@@ -65,6 +65,3 @@ with:
     ```yaml
     token: ${{ secrets.MY_TOKEN }}
     ```
-
-## Stars 🌟
-[![Stars](https://starchart.cc/step-security/increment.svg?variant=adaptive)](https://starchart.cc/step-security/increment)
