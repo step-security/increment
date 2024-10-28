@@ -1,10 +1,6 @@
 <h1 align="center">Increment Variable<br />
-<div align="center">
-  
-  [![Build](https://github.com/step-security/increment/actions/workflows/build.yml/badge.svg)](https://github.com/step-security/increment/)
-  [![Version](https://img.shields.io/github/v/tag/step-security/increment?label=version&sort=semver&color=066da5)](https://github.com/marketplace/actions/increment-variable)
-  [![Size](https://img.shields.io/github/size/step-security/increment/dist/index.js?branch=release/v2.08&label=size&color=066da5)](https://github.com/step-security/increment/)
-  
+<div align="center">  
+
 </div></h1>
 Action to increment a repository variable. Useful for increasing a version number for example.
 
