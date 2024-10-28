@@ -6,7 +6,6 @@
   [![Size](https://img.shields.io/github/size/step-security/increment/dist/index.js?branch=release/v2.08&label=size&color=066da5)](https://github.com/step-security/increment/)
   
 </div></h1>
-
 Action to increment a repository variable. Useful for increasing a version number for example.
 
 ## Features ✨
@@ -22,7 +21,7 @@ uses: step-security/increment@v2
 id: increment
 with:
   name: 'MY_VARIABLE'
-  token: ${{ secrets.npm }}
+  token: ${{ secrets.REPO_ACCESS_TOKEN }}
 ```
 
 ## Inputs 📝
