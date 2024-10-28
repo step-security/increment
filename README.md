@@ -22,7 +22,7 @@ uses: step-security/increment@v2
 id: increment
 with:
   name: 'MY_VARIABLE'
-  token: ${{ secrets.REPO_ACCESS_TOKEN }}
+  token: ${{ secrets.npm }}
 ```
 
 ## Inputs 📝
