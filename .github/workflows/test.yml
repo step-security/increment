@@ -8,117 +8,122 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7 # v2.10.1
+        with:
+          egress-policy: audit
+
       -
         name: Set variable    
-        uses: action-pack/set-variable@v1
+        uses: action-pack/set-variable@c745021a3a403ab9cc351b4aabe3e528f22d9937 # v1.11
         with:
           name: 'TEST'
           value: '1'
           token: ${{ secrets.REPO_ACCESS_TOKEN }}    
       -
         name: Test increment
-        uses: action-pack/increment@v2
+        uses: action-pack/increment@14c9f7fbbf560e7518ccaeab781aeca7bff15069 # v2.12
         with:
           name: 'TEST'
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
       -
         name: Test increment by 2
-        uses: action-pack/increment@v2
+        uses: action-pack/increment@14c9f7fbbf560e7518ccaeab781aeca7bff15069 # v2.12
         with:
           name: 'TEST'
           amount: 2
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
       -
         name: Test decrement by 4
-        uses: action-pack/increment@v2
+        uses: action-pack/increment@14c9f7fbbf560e7518ccaeab781aeca7bff15069 # v2.12
         with:
           name: 'TEST'
           amount: -4
           token: ${{ secrets.REPO_ACCESS_TOKEN }}    
       -
         name: Set variable    
-        uses: action-pack/set-variable@v1
+        uses: action-pack/set-variable@c745021a3a403ab9cc351b4aabe3e528f22d9937 # v1.11
         with:
           name: 'TEST'
           value: '05'
           token: ${{ secrets.REPO_ACCESS_TOKEN }}    
       -
         name: Test increment
-        uses: action-pack/increment@v2
+        uses: action-pack/increment@14c9f7fbbf560e7518ccaeab781aeca7bff15069 # v2.12
         with:
           name: 'TEST'
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
       -
         name: Test increment by 2
-        uses: action-pack/increment@v2
+        uses: action-pack/increment@14c9f7fbbf560e7518ccaeab781aeca7bff15069 # v2.12
         with:
           name: 'TEST'
           amount: 2
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
       -
         name: Test decrement by 4
-        uses: action-pack/increment@v2
+        uses: action-pack/increment@14c9f7fbbf560e7518ccaeab781aeca7bff15069 # v2.12
         with:
           name: 'TEST'
           amount: -4
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
       -
         name: Set variable    
-        uses: action-pack/set-variable@v1
+        uses: action-pack/set-variable@c745021a3a403ab9cc351b4aabe3e528f22d9937 # v1.11
         with:
           name: 'TEST'
           value: '0.5.05'
           token: ${{ secrets.REPO_ACCESS_TOKEN }}    
       -
         name: Test increment
-        uses: action-pack/increment@v2
+        uses: action-pack/increment@14c9f7fbbf560e7518ccaeab781aeca7bff15069 # v2.12
         with:
           name: 'TEST'
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
       -
         name: Test increment by 2
-        uses: action-pack/increment@v2
+        uses: action-pack/increment@14c9f7fbbf560e7518ccaeab781aeca7bff15069 # v2.12
         with:
           name: 'TEST'
           amount: 2
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
       -
         name: Test decrement by 4
-        uses: action-pack/increment@v2
+        uses: action-pack/increment@14c9f7fbbf560e7518ccaeab781aeca7bff15069 # v2.12
         with:
           name: 'TEST'
           amount: -4
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
       -
         name: Set variable    
-        uses: action-pack/set-variable@v1
+        uses: action-pack/set-variable@c745021a3a403ab9cc351b4aabe3e528f22d9937 # v1.11
         with:
           name: 'TEST'
           value: '-4'
           token: ${{ secrets.REPO_ACCESS_TOKEN }}    
       -
         name: Test negative increment
-        uses: action-pack/increment@v2
+        uses: action-pack/increment@14c9f7fbbf560e7518ccaeab781aeca7bff15069 # v2.12
         with:
           name: 'TEST'
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
       -
         name: Test negative decrement by 2
-        uses: action-pack/increment@v2
+        uses: action-pack/increment@14c9f7fbbf560e7518ccaeab781aeca7bff15069 # v2.12
         with:
           name: 'TEST'
           amount: -2
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
       -
         name: Test increment by 4
-        uses: action-pack/increment@v2
+        uses: action-pack/increment@14c9f7fbbf560e7518ccaeab781aeca7bff15069 # v2.12
         with:
           name: 'TEST'
           amount: 4
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
       -
         name: Test decrement by 4
-        uses: action-pack/increment@v2
+        uses: action-pack/increment@14c9f7fbbf560e7518ccaeab781aeca7bff15069 # v2.12
         with:
           name: 'TEST'
           amount: -4
