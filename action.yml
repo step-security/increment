@@ -1,0 +1,45 @@
+---
+name: "Increment variable"
+author: "step-security"
+description: "Action to increment a repository variable. Useful for increasing a version number for example."
+
+branding:
+  icon: "plus"
+  color: "gray-dark"
+
+inputs:
+  name:
+    description: Name
+    required: true
+
+  amount:
+    description: Amount
+    default: 1
+    required: false
+
+  repository:
+    description: Repository name
+    default: false
+    required: false
+
+  owner:
+    description: Repository owner
+    default: false
+    required: false
+
+  org:
+    description: Flag for organization
+    default: false
+    required: false
+
+  token:
+    description: Repository access token
+    required: true
+
+outputs:
+  value:
+    description: The incremented value
+
+runs:
+  using: node20
+  main: dist/index.js
