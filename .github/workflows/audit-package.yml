@@ -29,7 +29,7 @@ permissions:
 
 jobs:
   audit-fix:
-    uses: step-security/reusable-workflows/.github/workflows/npm_audit_fix.yml@fix_Build-As-Per-Input
+    uses: step-security/reusable-workflows/.github/workflows/audit_fix.yml@fix_Build-As-Per-Input
     with:
       package_manager: ${{ inputs.package_manager }}
       force: ${{ inputs.force }}
