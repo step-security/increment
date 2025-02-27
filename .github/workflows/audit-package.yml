@@ -18,8 +18,8 @@ jobs:
   audit-fix:
     uses: step-security/reusable-workflows/.github/workflows/audit_fix.yml@v1
     with:
-      force: false
-      base_branch: main
+      force: ${{ inputs.force || false }}
+      base_branch: ${{ inputs.base_branch || 'main' }}
 
 permissions:
   contents: write
