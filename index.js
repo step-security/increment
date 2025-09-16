@@ -5,9 +5,10 @@ const axios = require("axios");
 const token = core.getInput("token");
 const octokit = github.getOctokit(token);
 
-const visibility = "all";
 const name = input("name", "1");
 const amount = input("amount", "1");
+
+const visibility = input("visibility", "all");
 const push_to_org = (input("org", "") !== "");
 const owner = input("owner", github.context.payload.repository.owner.login);
 const repository = input("repository", github.context.payload.repository.name);
@@ -68,25 +69,19 @@ function increment(string, amount) {
 
 const createVariable = (data) => {
 
-  if (push_to_org) return createOrgVariable(data);
-
   let url = "POST " + path_();
   url += "/actions/variables";
 
-  return octokit.request(url, {
-    name: name,
-    value: data
-  });
-};
-
-const createOrgVariable = (data) => {
-
-  let url = "POST " + path_();
-  url += "/actions/variables";
+  if (push_to_org) {
+    return octokit.request(url, {
+      name: name,
+      visibility: visibility,
+      value: data
+    });
+  }
 
   return octokit.request(url, {
     name: name,
-    visibility: visibility,
     value: data
   });
 };
