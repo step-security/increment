@@ -16,7 +16,7 @@
     "axios": "^1.8.2"
   },
   "devDependencies": {
-    "@vercel/ncc": "^0.38.2",
+    "@vercel/ncc": "^0.38.4",
     "eslint-config-strongloop": "^2.1.0",
     "eslint-plugin-jsdoc": "^50.0.0"
   },
