@@ -7,6 +7,8 @@ on:
         description: "Base branch to create the PR against"
         required: true
         default: "main"
+  pull_request:
+    types: [opened, synchronize, labeled]
 
 permissions:
   contents: write
@@ -15,9 +17,11 @@ permissions:
   issues: write
 
 jobs:
-  audit-fix:
+  cherry-pick:
+    if: github.event_name == 'workflow_dispatch' || contains(fromJson(toJson(github.event.pull_request.labels)).*.name, 'review-required')
     uses: step-security/reusable-workflows/.github/workflows/auto_cherry_pick.yaml@v1
     with:
       original-owner: "action-pack"
       repo-name: "increment"
       base_branch: ${{ inputs.base_branch }}
+      mode: ${{ github.event_name == 'pull_request' && 'verify' || inputs.mode }}
