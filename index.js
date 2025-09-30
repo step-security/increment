@@ -7,6 +7,8 @@ const octokit = github.getOctokit(token);
 
 const name = input("name", "1");
 const amount = input("amount", "1");
+
+const visibility = input("visibility", "all");
 const push_to_org = (input("org", "") !== "");
 const owner = input("owner", github.context.payload.repository.owner.login);
 const repository = input("repository", github.context.payload.repository.name);
@@ -70,9 +72,15 @@ const createVariable = (data) => {
   let url = "POST " + path_();
   url += "/actions/variables";
 
+  if (push_to_org) {
+    return octokit.request(url, {
+      name: name,
+      visibility: visibility,
+      value: data
+    });
+  }
+
   return octokit.request(url, {
-    owner: owner,
-    repo: repository,
     name: name,
     value: data
   });
@@ -84,8 +92,6 @@ const setVariable = (data) => {
   url += "/actions/variables/" + name;
 
   return octokit.request(url, {
-    owner: owner,
-    repo: repository,
     name: name,
     value: data
   });
@@ -96,11 +102,7 @@ const getVariable = (varname) => {
   let url = "GET " + path_();
   url += "/actions/variables/" + varname;
 
-  return octokit.request(url, {
-    owner: owner,
-    repo: repository,
-    name: varname
-  });
+  return octokit.request(url);
 };
 
 const bootstrap = async () => {
