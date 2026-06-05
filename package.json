@@ -1,7 +1,7 @@
 {
   "name": "increment",
   "private": true,
-  "version": "2.15",
+  "version": "2.16",
   "license": "MIT License",
   "repository": "https://github.com/step-security/increment",
   "scripts": {
@@ -18,7 +18,7 @@
   "devDependencies": {
     "@vercel/ncc": "^0.38.2",
     "eslint-config-strongloop": "^2.1.0",
-    "eslint-plugin-jsdoc": "^50.0.0"
+    "eslint-plugin-jsdoc": "^61.0.0"
   },
   "overrides": {
     "@octokit/core": "^5.0.1"
