@@ -14,9 +14,6 @@ const push_to_org = (input("org", "") !== "");
 const owner = input("owner", github.context.payload.repository.owner.login);
 const repository = input("repository", github.context.payload.repository.name);
 
-/**
- *
- */
 function path_() {
 
   if (push_to_org) return "/orgs/" + owner;
@@ -26,11 +23,6 @@ function path_() {
 
 }
 
-/**
- *
- * @param name
- * @param def
- */
 function input(name, def) {
 
   let inp = core.getInput(name).trim();
@@ -40,32 +32,39 @@ function input(name, def) {
 
 }
 
-/**
- *
- * @param string
- * @param amount
- */
-function increment(string, amount) {
+function parseAmount(amount) {
+  const step = Number.parseInt(amount, 10);
+
+  if (!Number.isInteger(step) || step.toString() !== amount.trim()) {
+    throw new Error(`Invalid amount '${amount}', expected an integer.`);
+  }
+
+  return step;
+}
+
+function increment(string, step) {
+  const value = String(string || "");
+
   // Extract string's numbers
-  var numbers = string.match(/\d+/g) || [];
+  const matches = [...value.matchAll(/\d+/g)];
+
+  if (matches.length === 0) {
+    throw new Error(`Value '${value}' does not contain a number to increment.`);
+  }
 
   // Increment the last number by the amount
-  var lastNumberIndex = numbers.length - 1;
-  var lastNumber = parseInt(numbers[lastNumberIndex], 10) || 0;
-  numbers[lastNumberIndex] = (lastNumber + parseInt(amount, 10)).toString();
+  const lastMatch = matches[matches.length - 1];
+  const oldNumber = lastMatch[0];
+  const oldIndex = lastMatch.index;
 
-  // Reconstruct the string with incremented numbers and leading zeroes
-  var result = string.replace(/\d+/g, function(match) {
-    var currentNumber = numbers.shift();
-    if (match.startsWith("0")) {
-      while (currentNumber.length < match.length) {
-        currentNumber = "0" + currentNumber;
-      }
-    }
-    return currentNumber;
-  });
+  let newNumber = (Number.parseInt(oldNumber, 10) + step).toString();
 
-  return result;
+  // Reconstruct the string with incremented number and leading zeroes
+  if (oldNumber.startsWith("0") && !newNumber.startsWith("-")) {
+    newNumber = newNumber.padStart(oldNumber.length, "0");
+  }
+
+  return value.slice(0, oldIndex) + newNumber + value.slice(oldIndex + oldNumber.length);
 }
 
 const createVariable = (data) => {
@@ -90,7 +89,7 @@ const createVariable = (data) => {
 const setVariable = (data) => {
 
   let url = "PATCH " + path_();
-  url += "/actions/variables/" + name;
+  url += "/actions/variables/" + encodeURIComponent(name);
 
   return octokit.request(url, {
     name: name,
@@ -101,27 +100,16 @@ const setVariable = (data) => {
 const getVariable = (varname) => {
 
   let url = "GET " + path_();
-  url += "/actions/variables/" + varname;
+  url += "/actions/variables/" + encodeURIComponent(varname);
 
   return octokit.request(url);
 };
 
 const bootstrap = async () => {
-  await validateSubscription();
 
   let exists = false;
   let old_value = "";
-
-  try {
-
-    const response = await getVariable(name);
-
-    exists = response.status === 200;
-    if (exists) old_value = response.data.value;
-
-  } catch (e) {
-    // Variable does not exist
-  }
+  const step = parseAmount(amount);
 
   try {
 
@@ -129,20 +117,38 @@ const bootstrap = async () => {
       throw new Error("No name was specified!");
     }
 
+    const response = await getVariable(name);
+
+    exists = response.status === 200;
+    if (exists) old_value = response.data.value;
+
+  } catch (e) {
+    if (e.status !== 404) {
+      core.setFailed(path_() + ": " + e.message);
+      console.error(e);
+      return;
+    }
+
+    // Variable does not exist
+  }
+
+  try {
+    await validateSubscription();
+
     if (exists) {
 
-      let new_value = increment(old_value, amount);
+      let new_value = increment(old_value, step);
       const response = await setVariable(new_value);
 
       if (response.status === 204) {
         core.setOutput("value", new_value);
-        if (parseInt(amount, 10) === 0) {
+        if (step === 0) {
           return ("Amount was set to zero, value stays at " + old_value + ".");
         }
-        if (parseInt(amount, 10) < 0) {
+        if (step < 0) {
           return ("Successfully decremented " + name + " from " + old_value + " to " + new_value + ".");
         }
-        if (parseInt(amount, 10) > 0) {
+        if (step > 0) {
           return ("Successfully incremented " + name + " from " + old_value + " to " + new_value + ".");
         }
       }
@@ -151,11 +157,12 @@ const bootstrap = async () => {
 
     } else {
 
-      const response = await createVariable(amount);
+      const value = step.toString();
+      const response = await createVariable(value);
 
       if (response.status === 201) {
-        core.setOutput("value", amount);
-        return "Successfully created variable " + name + " with value " + amount + ".";
+        core.setOutput("value", value);
+        return "Successfully created variable " + name + " with value " + value + ".";
       }
 
       throw new Error("ERROR: Wrong status was returned: " + response.status);
@@ -168,26 +175,24 @@ const bootstrap = async () => {
 };
 
 bootstrap()
-  .then(
-    (result) => {
-      // eslint-disable-next-line no-console
-      if (result != null) {
-        console.log(result);
-      }
-    },
-    (err) => {
-      // eslint-disable-next-line no-console
-      core.setFailed(err.message);
-      console.error(err);
-    }
-  )
-  .then(() => {
-    process.exit();
-  });
+    .then(
+        (result) => {
+          // eslint-disable-next-line no-console
+          if (result != null) {
+            console.log(result);
+          }
+        },
+        (err) => {
+          // eslint-disable-next-line no-console
+          core.setFailed(err.message);
+          console.error(err);
+        }
+    )
+    .then(() => {
+      process.exit();
+    });
 
-/**
- *
- */
+
 async function validateSubscription() {
   let repoPrivate;
   const eventPath = process.env.GITHUB_EVENT_PATH;
@@ -199,7 +204,7 @@ async function validateSubscription() {
   const upstream = "action-pack/increment";
   const action = process.env.GITHUB_ACTION_REPOSITORY;
   const docsUrl =
-    "https://docs.stepsecurity.io/actions/stepsecurity-maintained-actions";
+      "https://docs.stepsecurity.io/actions/stepsecurity-maintained-actions";
 
   core.info("");
   core.info("[1;36mStepSecurity Maintained Action[0m");
@@ -216,17 +221,17 @@ async function validateSubscription() {
   if (serverUrl !== "https://github.com") body.ghes_server = serverUrl;
   try {
     await axios.post(
-      `https://agent.api.stepsecurity.io/v1/github/${process.env.GITHUB_REPOSITORY}/actions/maintained-actions-subscription`,
-      body,
-      { timeout: 3000 },
+        `https://agent.api.stepsecurity.io/v1/github/${process.env.GITHUB_REPOSITORY}/actions/maintained-actions-subscription`,
+        body,
+        { timeout: 3000 },
     );
   } catch (error) {
     if (axios.isAxiosError(error) && error.response?.status === 403) {
       core.error(
-        `[1;31mThis action requires a StepSecurity subscription for private repositories.[0m`,
+          `[1;31mThis action requires a StepSecurity subscription for private repositories.[0m`,
       );
       core.error(
-        `[31mLearn how to enable a subscription: ${docsUrl}[0m`,
+          `[31mLearn how to enable a subscription: ${docsUrl}[0m`,
       );
       process.exit(1);
     }
