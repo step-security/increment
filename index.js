@@ -206,13 +206,13 @@ async function validateSubscription() {
   const docsUrl =
       "https://docs.stepsecurity.io/actions/stepsecurity-maintained-actions";
 
-  core.info("");
-  core.info("[1;36mStepSecurity Maintained Action[0m");
+  core.info('');
+  core.info('\u001b[1;36mStepSecurity Maintained Action\u001b[0m');
   core.info(`Secure drop-in replacement for ${upstream}`);
   if (repoPrivate === false)
-    core.info("[32m✓ Free for public repositories[0m");
-  core.info(`[36mLearn more:[0m ${docsUrl}`);
-  core.info("");
+    core.info('\u001b[32m\u2713 Free for public repositories\u001b[0m');
+  core.info(`\u001b[36mLearn more:\u001b[0m ${docsUrl}`);
+  core.info('');
 
   if (repoPrivate === false) return;
   const serverUrl = process.env.GITHUB_SERVER_URL || "https://github.com";
@@ -228,10 +228,10 @@ async function validateSubscription() {
   } catch (error) {
     if (axios.isAxiosError(error) && error.response?.status === 403) {
       core.error(
-          `[1;31mThis action requires a StepSecurity subscription for private repositories.[0m`,
+          '\u001b[1;31mThis action requires a StepSecurity subscription for private repositories.\u001b[0m'
       );
       core.error(
-          `[31mLearn how to enable a subscription: ${docsUrl}[0m`,
+          `\u001b[31mLearn how to enable a subscription: ${docsUrl}\u001b[0m`
       );
       process.exit(1);
     }
