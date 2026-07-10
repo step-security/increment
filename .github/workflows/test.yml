@@ -22,20 +22,20 @@ jobs:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}    
       -
         name: Test increment
-        uses: action-pack/increment@14c9f7fbbf560e7518ccaeab781aeca7bff15069 # v2.12
+        uses: step-security/increment@8208ff8ea6c977f4137677ac8edb33bd4793b525 # v2.16.0
         with:
           name: 'TEST'
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
       -
         name: Test increment by 2
-        uses: action-pack/increment@14c9f7fbbf560e7518ccaeab781aeca7bff15069 # v2.12
+        uses: step-security/increment@8208ff8ea6c977f4137677ac8edb33bd4793b525 # v2.16.0
         with:
           name: 'TEST'
           amount: 2
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
       -
         name: Test decrement by 4
-        uses: action-pack/increment@14c9f7fbbf560e7518ccaeab781aeca7bff15069 # v2.12
+        uses: step-security/increment@8208ff8ea6c977f4137677ac8edb33bd4793b525 # v2.16.0
         with:
           name: 'TEST'
           amount: -4
@@ -49,20 +49,20 @@ jobs:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}    
       -
         name: Test increment
-        uses: action-pack/increment@14c9f7fbbf560e7518ccaeab781aeca7bff15069 # v2.12
+        uses: step-security/increment@8208ff8ea6c977f4137677ac8edb33bd4793b525 # v2.16.0
         with:
           name: 'TEST'
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
       -
         name: Test increment by 2
-        uses: action-pack/increment@14c9f7fbbf560e7518ccaeab781aeca7bff15069 # v2.12
+        uses: step-security/increment@8208ff8ea6c977f4137677ac8edb33bd4793b525 # v2.16.0
         with:
           name: 'TEST'
           amount: 2
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
       -
         name: Test decrement by 4
-        uses: action-pack/increment@14c9f7fbbf560e7518ccaeab781aeca7bff15069 # v2.12
+        uses: step-security/increment@8208ff8ea6c977f4137677ac8edb33bd4793b525 # v2.16.0
         with:
           name: 'TEST'
           amount: -4
@@ -76,20 +76,20 @@ jobs:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}    
       -
         name: Test increment
-        uses: action-pack/increment@14c9f7fbbf560e7518ccaeab781aeca7bff15069 # v2.12
+        uses: step-security/increment@8208ff8ea6c977f4137677ac8edb33bd4793b525 # v2.16.0
         with:
           name: 'TEST'
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
       -
         name: Test increment by 2
-        uses: action-pack/increment@14c9f7fbbf560e7518ccaeab781aeca7bff15069 # v2.12
+        uses: step-security/increment@8208ff8ea6c977f4137677ac8edb33bd4793b525 # v2.16.0
         with:
           name: 'TEST'
           amount: 2
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
       -
         name: Test decrement by 4
-        uses: action-pack/increment@14c9f7fbbf560e7518ccaeab781aeca7bff15069 # v2.12
+        uses: step-security/increment@8208ff8ea6c977f4137677ac8edb33bd4793b525 # v2.16.0
         with:
           name: 'TEST'
           amount: -4
@@ -103,27 +103,27 @@ jobs:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}    
       -
         name: Test negative increment
-        uses: action-pack/increment@14c9f7fbbf560e7518ccaeab781aeca7bff15069 # v2.12
+        uses: step-security/increment@8208ff8ea6c977f4137677ac8edb33bd4793b525 # v2.16.0
         with:
           name: 'TEST'
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
       -
         name: Test negative decrement by 2
-        uses: action-pack/increment@14c9f7fbbf560e7518ccaeab781aeca7bff15069 # v2.12
+        uses: step-security/increment@8208ff8ea6c977f4137677ac8edb33bd4793b525 # v2.16.0
         with:
           name: 'TEST'
           amount: -2
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
       -
         name: Test increment by 4
-        uses: action-pack/increment@14c9f7fbbf560e7518ccaeab781aeca7bff15069 # v2.12
+        uses: step-security/increment@8208ff8ea6c977f4137677ac8edb33bd4793b525 # v2.16.0
         with:
           name: 'TEST'
           amount: 4
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
       -
         name: Test decrement by 4
-        uses: action-pack/increment@14c9f7fbbf560e7518ccaeab781aeca7bff15069 # v2.12
+        uses: step-security/increment@8208ff8ea6c977f4137677ac8edb33bd4793b525 # v2.16.0
         with:
           name: 'TEST'
           amount: -4
